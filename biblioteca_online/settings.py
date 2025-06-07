@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-317axw#@^0zy=)lu=bv%==&_76%imo2dj&r2cbyu(@z0m8cl#$
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["sistema-biblioteca-online.onrender.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
