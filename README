@@ -1,0 +1,293 @@
+Permissões de Usuários nas Rotas da API
+Este documento detalha as permissões de acesso e as ações permitidas para diferentes tipos de usuários (administradores e usuários comuns) em cada rota da API.
+
+Rotas de Autenticação e Registro
+Registrar Usuário (POST)
+Sumário: Registrar um novo usuário.
+Descrição: Permite o registro de novos usuários. Apenas administradores autenticados podem registrar novos administradores.
+Permissões:
+Usuários Comuns: Podem registrar novos usuários com o tipo "aluno", "professor" ou "pesquisador".
+Administradores: Podem registrar qualquer tipo de usuário, incluindo outros administradores.
+Login de Usuário (POST)
+Sumário: Realiza login com e-mail e senha, retornando tokens JWT e dados do usuário.
+Descrição: Permite que qualquer usuário autentique-se no sistema.
+Permissões:
+Todos os Usuários: Podem realizar login fornecendo e-mail e senha válidos.
+
+Rotas de Livros
+Listar Livros (GET)
+Sumário: Listar todos os livros ou obter um por ID.
+Permissões:
+Todos os Usuários Autenticados: Podem listar todos os livros ou buscar um livro específico pelo ID.
+Criar Novo Livro (POST)
+Sumário: Criar um novo livro.
+Permissões:
+Administradores: Podem criar novos livros.
+Usuários Comuns: Não podem criar novos livros.
+Atualizar Livro (PUT)
+Sumário: Atualizar um livro existente (requer ID).
+Permissões:
+Administradores: Podem atualizar qualquer livro existente.
+Usuários Comuns: Não podem atualizar livros.
+Excluir Livro (DELETE)
+Sumário: Excluir um livro (requer ID).
+Permissões:
+Administradores: Podem excluir qualquer livro.
+Usuários Comuns: Não podem excluir livros.
+
+Rotas de Usuários
+Listar Usuários (GET)
+Sumário: Listar usuários (todos se for administrador, ou apenas o próprio se não for).
+Permissões:
+Administradores: Podem listar todos os usuários registrados.
+Usuários Comuns: Podem listar e acessar apenas seus próprios dados de usuário.
+Atualizar Usuário (PUT)
+Sumário: Atualizar um usuário (requer ID). Apenas administradores podem alterar o campo 'punido_ate'.
+Descrição: Permite atualizar um usuário específico.
+Permissões:
+Administradores: Podem atualizar qualquer campo de qualquer usuário, incluindo o campo punido_ate.
+Usuários Comuns: Podem atualizar apenas seus próprios dados, com exceção do campo punido_ate.
+Excluir Usuário (DELETE)
+Sumário: Excluir um usuário (requer ID).
+Permissões:
+Administradores: Podem excluir qualquer usuário.
+Usuários Comuns: Não podem excluir usuários.
+
+Rotas de Exemplares
+Listar Exemplares (GET)
+Sumário: Listar todos os exemplares ou obter um por ID.
+Permissões:
+Todos os Usuários Autenticados: Podem listar todos os exemplares ou buscar um exemplar específico pelo ID.
+Adicionar Novo Exemplar (POST)
+Sumário: Adicionar um novo exemplar.
+Permissões:
+Administradores: Podem adicionar novos exemplares.
+Usuários Comuns: Não podem adicionar exemplares.
+Atualizar Exemplar (PUT)
+Sumário: Atualizar um exemplar (requer ID).
+Permissões:
+Administradores: Podem atualizar qualquer exemplar existente.
+Usuários Comuns: Não podem atualizar exemplares.
+Excluir Exemplar (DELETE)
+Sumário: Excluir um exemplar (requer ID).
+Permissões:
+Administradores: Podem excluir qualquer exemplar.
+Usuários Comuns: Não podem excluir exemplares.
+
+Rotas de Empréstimos
+Listar Empréstimos (GET)
+Sumário: Listar todos os empréstimos (para administradores) ou listar os empréstimos próprios dos demais usuários.
+Permissões:
+Administradores: Podem listar todos os empréstimos.
+Usuários Comuns: Podem listar apenas seus próprios empréstimos.
+Registrar Novo Empréstimo (POST)
+Sumário: Registrar um novo empréstimo.
+Descrição: Usuários comuns informam apenas id_exemplar e data_devolucao_prevista. data_emprestimo e status são definidos automaticamente. O prazo máximo é de até 20 dias a partir da data do empréstimo. Administradores podem criar empréstimos para qualquer usuário.
+Permissões:
+Administradores: Podem registrar empréstimos para qualquer usuário.
+Usuários Comuns: Podem registrar empréstimos apenas para si mesmos, informando id_exemplar e data_devolucao_prevista.
+Atualizar Empréstimo (PUT)
+Sumário: Atualizar um empréstimo existente.
+Descrição: Administradores podem atualizar qualquer campo. Usuários comuns podem atualizar apenas o campo data_devolucao_prevista quando o empréstimo está com status pendente, respeitando o limite de até 20 dias após a data do empréstimo.
+Permissões:
+Administradores: Podem atualizar qualquer campo de qualquer empréstimo.
+Usuários Comuns: Podem atualizar apenas a data_devolucao_prevista de seus próprios empréstimos, desde que o status seja pendente e a nova data respeite o limite de 20 dias após a data_emprestimo.
+Cancelar Empréstimo (DELETE)
+Sumário: Cancelar um empréstimo.
+Descrição: Administradores podem cancelar qualquer empréstimo. Usuários comuns podem cancelar apenas empréstimos com status pendente e que sejam seus.
+Permissões:
+Administradores: Podem cancelar qualquer empréstimo.
+Usuários Comuns: Podem cancelar apenas seus próprios empréstimos, desde que o status seja pendente.
+
+Rotas de Reservas
+Listar Reservas (GET)
+Sumário: Listar todas as reservas ou buscar uma reserva por ID.
+Permissões:
+Todos os Usuários Autenticados: Podem listar todas as reservas ou buscar uma reserva específica pelo ID.
+Registrar Nova Reserva (POST)
+Sumário: Registrar uma nova reserva.
+Permissões:
+Todos os Usuários Autenticados: Podem registrar novas reservas para si mesmos.
+Administradores: Podem registrar reservas para outros usuários.
+Atualizar Reserva (PUT)
+Sumário: Atualizar uma reserva existente.
+Permissões:
+Administradores: Podem atualizar qualquer reserva.
+Usuários Comuns: Podem atualizar apenas suas próprias reservas.
+Cancelar Reserva (DELETE)
+Sumário: Cancelar uma reserva.
+Permissões:
+Administradores: Podem cancelar qualquer reserva.
+Usuários Comuns: Podem cancelar apenas suas próprias reservas, desde que o status da reserva permita o cancelamento.
+
+Rotas de Recursos Digitais
+Listar Recursos Digitais (GET)
+Sumário: Listar todos os recursos digitais ou buscar um por ID.
+Permissões:
+Todos os Usuários Autenticados: Podem listar todos os recursos digitais ou buscar um específico pelo ID.
+Registrar Novo Recurso Digital (POST)
+Sumário: Registrar um novo recurso digital.
+Permissões:
+Administradores: Podem registrar novos recursos digitais.
+Usuários Comuns: Não podem registrar recursos digitais.
+Atualizar Recurso Digital (PUT)
+Sumário: Atualizar um recurso digital existente.
+Permissões:
+Administradores: Podem atualizar qualquer recurso digital.
+Usuários Comuns: Não podem atualizar recursos digitais.
+Excluir Recurso Digital (DELETE)
+Sumário: Excluir um recurso digital.
+Permissões:
+Administradores: Podem excluir qualquer recurso digital.
+Usuários Comuns: Não podem excluir recursos digitais.
+
+Rotas de Listas de Leitura
+Listar Listas de Leitura (GET)
+Sumário: Listar todas as listas de leitura ou buscar uma por ID.
+Descrição: Usuários comuns podem listar e acessar apenas suas próprias listas. Administradores podem listar e acessar todas.
+Permissões:
+Administradores: Podem listar e acessar todas as listas de leitura.
+Usuários Comuns: Podem listar e acessar apenas suas próprias listas de leitura.
+Criar Nova Lista de Leitura (POST)
+Sumário: Criar nova lista de leitura.
+Descrição: Usuários comuns criam listas para si mesmos. Administradores podem especificar id_usuario. Campo obrigatório: nome.
+Permissões:
+Administradores: Podem criar listas de leitura para qualquer usuário, especificando id_usuario.
+Usuários Comuns: Podem criar listas de leitura apenas para si mesmos.
+Atualizar Lista de Leitura (PUT)
+Sumário: Atualizar uma lista de leitura.
+Description: Usuários comuns podem atualizar suas próprias listas. Administradores podem atualizar qualquer lista.
+Permissões:
+Administradores: Podem atualizar qualquer lista de leitura.
+Usuários Comuns: Podem atualizar apenas suas próprias listas de leitura.
+Deletar Lista de Leitura (DELETE)
+Sumário: Deletar uma lista de leitura.
+Description: Usuários comuns podem deletar suas próprias listas. Administradores podem deletar qualquer lista.
+Permissões:
+Administradores: Podem deletar qualquer lista de leitura.
+Usuários Comuns: Podem deletar apenas suas próprias listas de leitura.
+
+Rotas de Livros em Listas de Leitura
+Listar Livros de Lista de Leitura (GET)
+Sumário: Listar livros de uma lista de leitura ou buscar um livro específico na lista.
+Descrição: Usuários comuns podem listar os livros apenas das suas próprias listas. Administradores podem listar todos os livros de qualquer lista. Se id_lista e id_livro forem fornecidos, busca o livro específico na lista.
+Permissões:
+Administradores: Podem listar todos os livros de qualquer lista de leitura.
+Usuários Comuns: Podem listar os livros apenas de suas próprias listas de leitura.
+Adicionar Livro a Lista de Leitura (POST)
+Sumário: Adicionar um livro a uma lista de leitura.
+Descrição: Usuários comuns só podem adicionar livros às suas próprias listas. Administradores podem adicionar a qualquer lista. Campos obrigatórios: id_lista e id_livro.
+Permissões:
+Administradores: Podem adicionar livros a qualquer lista de leitura.
+Usuários Comuns: Podem adicionar livros apenas às suas próprias listas de leitura.
+Atualizar Livro em Lista de Leitura (PUT)
+Sumário: Atualizar dados de um livro em uma lista de leitura.
+Descrição: Usuários comuns só podem atualizar livros nas suas próprias listas. Administradores podem atualizar em qualquer lista. IDs de id_lista e id_livro são obrigatórios na URL.
+Permissões:
+Administradores: Podem atualizar dados de livros em qualquer lista de leitura.
+Usuários Comuns: Podem atualizar dados de livros apenas em suas próprias listas de leitura.
+Remover Livro de Lista de Leitura (DELETE)
+Sumário: Remover um livro de uma lista de leitura.
+Descrição: Usuários comuns só podem remover livros das suas próprias listas. Administradores podem remover de qualquer lista.
+Permissões:
+Administradores: Podem remover livros de qualquer lista de leitura.
+Usuários Comuns: Podem remover livros apenas de suas próprias listas de leitura.
+
+Rotas de Recursos Digitais em Listas de Leitura
+Listar Recursos Digitais de Lista de Leitura (GET)
+Sumário: Listar recursos digitais de listas de leitura ou buscar um recurso específico.
+Descrição: Usuários comuns podem listar e acessar apenas recursos digitais em suas próprias listas de leitura. Administradores podem listar e acessar todos os recursos digitais de todas as listas.
+Permissões:
+Administradores: Podem listar e acessar todos os recursos digitais de todas as listas de leitura.
+Usuários Comuns: Podem listar e acessar apenas recursos digitais em suas próprias listas de leitura.
+Adicionar Recurso Digital a Lista de Leitura (POST)
+Sumário: Adicionar recurso digital a uma lista de leitura.
+Descrição: Usuários comuns podem adicionar recursos às próprias listas. Administradores podem adicionar em qualquer lista.
+Permissões:
+Administradores: Podem adicionar recursos digitais a qualquer lista de leitura.
+Usuários Comuns: Podem adicionar recursos digitais apenas às suas próprias listas de leitura.
+Atualizar Recurso Digital em Lista de Leitura (PUT)
+Sumário: Atualizar um recurso digital em uma lista.
+Descrição: Usuários comuns podem atualizar apenas recursos nas próprias listas. Administradores podem atualizar qualquer lista.
+Permissões:
+Administradores: Podem atualizar recursos digitais em qualquer lista de leitura.
+Usuários Comuns: Podem atualizar recursos digitais apenas em suas próprias listas de leitura.
+Remover Recurso Digital de Lista de Leitura (DELETE)
+Sumário: Remover um recurso digital de uma lista.
+Description: Usuários comuns podem remover recursos apenas de suas próprias listas. Administradores podem remover de qualquer lista.
+Permissões:
+Administradores: Podem remover recursos digitais de qualquer lista de leitura.
+Usuários Comuns: Podem remover recursos digitais apenas de suas próprias listas de leitura.
+
+Rotas de Histórico de Empréstimos
+Listar Histórico de Empréstimos (GET)
+Sumário: Listar histórico de empréstimos.
+Descrição: Administradores podem listar todos os históricos ou um específico. Usuários comuns podem listar ou acessar apenas seus próprios históricos.
+Permissões:
+Administradores: Podem listar todos os históricos de empréstimos ou um específico.
+Usuários Comuns: Podem listar ou acessar apenas seus próprios históricos de empréstimos.
+Registrar Novo Histórico de Empréstimo (POST)
+Sumário: Registrar um novo histórico de empréstimo.
+Descrição: Apenas o sistema e administradores podem criar novos históricos. Campos obrigatórios: id_usuario, id_exemplar, data_emprestimo e data_devolucao_prevista.
+Permissões:
+Administradores: Podem registrar novos históricos de empréstimo.
+Usuários Comuns: Não podem registrar novos históricos de empréstimo diretamente. Esta operação é geralmente controlada pelo sistema.
+Rotas de Favoritos
+Listar Favoritos (GET)
+Sumário: Listar favoritos ou buscar favorito por ID.
+Descrição: Administradores podem listar todos os favoritos ou um específico. Usuários comuns podem listar ou acessar apenas seus próprios favoritos.
+Permissões:
+Administradores: Podem listar todos os favoritos ou buscar um específico pelo ID.
+Usuários Comuns: Podem listar e acessar apenas seus próprios favoritos.
+Adicionar Novo Favorito (POST)
+Sumário: Adicionar um novo favorito.
+Descrição: Qualquer usuário autenticado pode adicionar um favorito. O campo id_usuario é preenchido automaticamente com o usuário autenticado. Campos obrigatórios: tipo_conteudo e id_conteudo.
+Permissões:
+Todos os Usuários Autenticados: Podem adicionar um novo favorito, que será associado automaticamente ao seu id_usuario.
+Atualizar Favorito (PUT)
+Sumário: Atualizar um favorito existente.
+Descrição: Apenas administradores podem atualizar favoritos. O ID do favorito é obrigatório na URL.
+Permissões:
+Administradores: Podem atualizar qualquer favorito existente.
+Usuários Comuns: Não podem atualizar favoritos.
+Excluir Favorito (DELETE)
+Sumário: Excluir um favorito.
+Descrição: Administradores podem excluir qualquer favorito. Usuários comuns só podem excluir seus próprios favoritos. O ID do favorito é obrigatório na URL.
+Permissões:
+Administradores: Podem excluir qualquer favorito.
+Usuários Comuns: Podem excluir apenas seus próprios favoritos.
+
+Rotas de Notificações
+Listar Notificações (GET)
+Sumário: Listar notificações.
+Descrição: Retorna uma lista de notificações para o usuário autenticado. Usuários comuns recebem apenas as próprias notificações. Administradores podem listar todas ou filtrar por id_usuario via query param.
+Permissões:
+Administradores: Podem listar todas as notificações ou filtrar por id_usuario.
+Usuários Comuns: Podem listar apenas suas próprias notificações.
+Enviar Notificação (POST)
+Sumário: Enviar notificação.
+Descrição: Cria uma nova notificação para um usuário. Apenas administradores têm permissão para isso.
+Permissões:
+Administradores: Podem enviar notificações para qualquer usuário.
+Usuários Comuns: Não podem enviar notificações.
+Atualizar Notificação (PUT)
+Sumário: Atualizar uma notificação (marcar como lida ou editar mensagem).
+Descrição: Usuários comuns podem marcar como lida apenas suas próprias notificações. Administradores podem além de marcar como lida, também editar o conteúdo da mensagem e alterar o campo usuario se desejado.
+Permissões:
+Administradores: Podem marcar qualquer notificação como lida, editar o conteúdo da mensagem e alterar o id_usuario associado à notificação.
+Usuários Comuns: Podem marcar como lida apenas suas próprias notificações.
+
+Rotas de Busca Avançada
+Busca Avançada no Acervo (GET)
+Sumário: Busca avançada no acervo.
+Descrição: Permite filtrar livros e recursos digitais por título, autor, ano, gênero, quantidade de páginas e outros parâmetros.
+Permissões:
+Todos os Usuários Autenticados: Podem realizar buscas avançadas no acervo.
+
+Rotas de Relatórios
+Relatório de Uso do Acervo da Biblioteca (PDF) (GET)
+Sumário: Relatório de uso do acervo da biblioteca (PDF).
+Descrição: Gera um relatório consolidado em PDF com estatísticas de uso do acervo da biblioteca. Apenas administradores podem acessar este relatório.
+Permissões:
+Administradores: Podem gerar e acessar o relatório de uso do acervo.
+Usuários Comuns: Não podem gerar ou acessar este relatório.
