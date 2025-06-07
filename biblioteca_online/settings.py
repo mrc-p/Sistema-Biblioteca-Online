@@ -2,11 +2,12 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import dj_database_url
+import os
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -87,8 +88,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'biblioteca_online.wsgi.application'
 
 
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(' ') if not DEBUG else []
+
 DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
+       'default': dj_database_url.parse(os.environ.get('DATABASE_URL', ''))
 }
 
 
