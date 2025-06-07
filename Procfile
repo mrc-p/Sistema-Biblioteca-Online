@@ -1,1 +1,1 @@
-web: gunicorn biblioteca_online.wsgi:application --bind 0.0.0.0:$PORT
+web: gunicorn biblioteca_online.wsgi
