@@ -5,7 +5,6 @@ import dj_database_url
 import os
 
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
@@ -118,7 +117,6 @@ TIME_ZONE = 'America/Fortaleza'
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = 'static/'
 
