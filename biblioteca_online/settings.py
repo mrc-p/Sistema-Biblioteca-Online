@@ -1,13 +1,12 @@
 from pathlib import Path
 from datetime import timedelta
+from decouple import config
+import dj_database_url
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-SECRET_KEY = 'django-insecure-317axw#@^0zy=)lu=bv%==&_76%imo2dj&r2cbyu(@z0m8cl#$'
-
-DEBUG = True
-
-ALLOWED_HOSTS = ["sistema-biblioteca-online.onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -87,15 +86,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'biblioteca_online.wsgi.application'
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bd_biblioteca_online',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 
