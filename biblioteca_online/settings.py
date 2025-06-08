@@ -90,7 +90,11 @@ WSGI_APPLICATION = 'biblioteca_online.wsgi.application'
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(' ') if not DEBUG else []
 
 DATABASES = {
-       'default': dj_database_url.parse(os.environ.get('DATABASE_URL', ''))
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL', ''),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
