@@ -3,10 +3,12 @@ from datetime import timedelta
 from decouple import config
 import dj_database_url
 import os
+import ssl
 
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(' ') if not DEBUG else []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -87,7 +89,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'biblioteca_online.wsgi.application'
 
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(' ') if not DEBUG else []
 
 DATABASES = {
     'default': dj_database_url.parse(
@@ -95,6 +96,16 @@ DATABASES = {
         conn_max_age=600,
         ssl_require=True
     )
+}
+
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
+    'sslrootcert': '',
+    'sslcert': '',
+    'sslkey': '',
+    'sslcrl': '',
+    'sslcompression': 0,
+    'sslpassword': '',
 }
 
 
