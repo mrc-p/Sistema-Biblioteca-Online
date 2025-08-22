@@ -107,11 +107,6 @@ def registro_usuario(request):
         if not re.match(email_regex, dados.get('email', '')):
             return Response({"erro": "Email inválido."}, status=status.HTTP_400_BAD_REQUEST)
 
-        if 'password' in dados:
-            if len(dados['password']) < 6:
-                return Response({"erro": "A senha deve ter pelo menos 6 caracteres."}, status=status.HTTP_400_BAD_REQUEST)
-            dados['password'] = make_password(dados['password'])
-
         serializer = UsuarioSerializer(data=dados)
         if serializer.is_valid():
             serializer.save()
