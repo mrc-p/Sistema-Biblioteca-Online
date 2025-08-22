@@ -1,0 +1,35 @@
+from django.urls import path
+from app.views import gerar_relatorio_pdf
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('registro/', views.registro_usuario),
+    path('login/', views.login_usuario),
+    path('livros/', views.livro_manager, name='livro_list'),
+    path('livros/<int:id>/', views.livro_manager, name='livro_detail'),
+    path('exemplares/', views.exemplar_manager, name='exemplar_list'),
+    path('exemplares/<int:id>/', views.exemplar_manager, name='exemplar_detail'),
+    path('usuarios/', views.usuario_manager, name='usuario_list'),
+    path('usuarios/<int:id>/', views.usuario_manager, name='usuario_detail'),
+    path('emprestimos/', views.emprestimo_manager, name='emprestimo_list'),
+    path('emprestimos/<int:id>/', views.emprestimo_manager, name='emprestimo_detail'),
+    path('reservas/', views.reserva_manager, name='reserva_list'),
+    path('reservas/<int:id>/', views.reserva_manager, name='reserva_detail'),
+    path('recursosdigitais/', views.recurso_digital_manager, name='recursodigital_list'),
+    path('recursosdigitais/<int:id>/', views.recurso_digital_manager, name='recursodigital_detail'),
+    path('listasleitura/', views.lista_leitura_manager, name='listaleitura_list'),
+    path('listasleitura/<int:id>/', views.lista_leitura_manager, name='listaleitura_detail'),
+    path('livroslistasleitura/', views.livros_listas_leitura_manager, name='livroslistasleitura_list'),
+    path('livroslistasleitura/<int:id_lista>/<int:id_livro>/', views.livros_listas_leitura_manager, name='livroslistasleitura_detail'),
+    path('recursosdigitaislistasleitura/', views.recursos_digitais_listas_leitura_manager, name='recursosdigitaislistasleitura_list'),
+    path('recursosdigitaislistasleitura/<int:id_lista>/<int:id_recurso_digital>/', views.recursos_digitais_listas_leitura_manager, name='recursosdigitaislistasleitura_detail'),
+    path('historicoemprestimos/', views.historico_emprestimo_manager, name='historicoemprestimo_list'),
+    path('historicoemprestimos/<int:id>/', views.historico_emprestimo_manager, name='historicoemprestimo_detail'),
+    path('favoritos/', views.favorito_manager, name='favorito_list'),
+    path('favoritos/<int:id>/', views.favorito_manager, name='favorito_detail'),
+    path('notificacoes/', views.notificacoes_manager, name='listar_notificacoes'),
+    path('notificacoes/<int:id>/', views.notificacoes_manager, name='marcar_como_lida'),
+    path('busca-avancada/', views.busca_avancada, name='busca_avancada'),
+    path('api/relatorios/pdf/', gerar_relatorio_pdf, name='gerar_relatorio_pdf'),
+]

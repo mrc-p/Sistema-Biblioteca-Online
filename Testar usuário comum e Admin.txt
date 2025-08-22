@@ -1,0 +1,12 @@
+Testar usuário admin:
+{
+ "email": "marcos_admin@biblioteca.com",
+ "password": "2200qwerty"
+}
+
+
+Testar usuário comum:
+{
+"email": "carlos.pereira@instituto.br",
+"password": "2255"
+}

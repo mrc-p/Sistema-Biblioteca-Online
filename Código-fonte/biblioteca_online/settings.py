@@ -4,8 +4,6 @@ from decouple import config
 import dj_database_url
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
@@ -71,6 +69,7 @@ ROOT_URLCONF = 'biblioteca_online.urls'
 
 
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -88,9 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'biblioteca_online.wsgi.application'
 
-
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 DATABASES = {
